@@ -60,3 +60,36 @@ To avoid grader errors from the DeepLearning.AI AutoGrader, I made sure NOT to:
 - **Derivative at Minimum:** dL/dω ≈ -0.129 (approximately zero, confirming optimality)
 
 ### Sample Function Values
+
+L(ω = 0) = 110.72
+L(ω = 0.2) = 61.16
+L(ω = 0.8) = 11.21
+L(ω = 1) = 27.48
+
+
+
+### Business Interpretation
+Based on historical prices from February 2018 to March 2020:
+- **Optimal strategy:** Purchase 70.2% of product P from Supplier A and 29.8% from Supplier B
+- This allocation minimizes the variance (risk) of costs
+- The derivative at this point is approximately zero, confirming it's a minimum
+
+## 🔗 Key Concepts & Formulas
+- **Cost Function:** `f(ω) = pA·ω + pB·(1-ω)`
+- **Loss Function (Variance):** `L(ω) = (1/k) * Σ(f(ω) - mean(f(ω)))²`
+- **Optimization Goal:** Find ω ∈ [0, 1] that minimizes L(ω)
+- **Derivative Test:** At minimum point, `dL/dω = 0`
+- **Numerical Approach:** Evaluate L(ω) at discrete points and find minimum
+
+## 🧪 Implementation Highlights
+```python
+# Core functions implemented
+def f_of_omega(omega, pA, pB):
+    return pA * omega + pB * (1 - omega)
+
+def L_of_omega(omega, pA, pB):
+    f = f_of_omega(omega, pA, pB)
+    return (1/len(f)) * np.sum((f - np.mean(f))**2)
+
+# Automatic differentiation
+dLdOmega = grad(L_of_omega)
